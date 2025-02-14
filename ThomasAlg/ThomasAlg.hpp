@@ -3,7 +3,6 @@
 
 std::vector<float> ThomasAlg(const std::vector<float>& a, const std::vector<float>& b, const std::vector<float>& c, const std::vector<float>& d){
     std::vector<float> p, q;
-    // проверка на размер матрицы иначе 不好
     int n = b.size();
     p.push_back(-c[0]/b[0]);
     q.push_back(d[0]/b[0]);
