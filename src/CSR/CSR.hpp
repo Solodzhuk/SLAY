@@ -1,8 +1,6 @@
 #pragma once
 
-#include <unordered_map>
 #include <vector>
-#include <set>
 #include <bits/stdc++.h>
 #include <limits>
 
@@ -12,7 +10,7 @@ struct MatrixElement {
     double v;
 };
 
-void sort(std::vector<int>& arg, std::vector<double> val, int start, int end);
+void sort(std::vector<int>& i, std::vector<int>& j, std::vector<double>& val, int start, int end);
 
 class DOK {
     public:
@@ -23,11 +21,19 @@ class DOK {
 };
 
 class CSR {
-    private:
+    public:
         std::vector<double> values;
         std::vector<int> cols;
         std::vector<int> rows;
-    public:
         CSR(DOK data);
         double access(const int& i, const int& j);
+        double operator()(const int& i, const int& j);
 };
+
+std::vector<double> operator+ (const std::vector<double>& one, const std::vector<double>& two);
+
+double DOT(const std::vector<double>& one, const std::vector<double>& two);
+
+std::vector<double> operator* (const std::vector<double>& one, const double& two);
+
+std::vector<double> operator* (CSR& one, const std::vector<double>& two);
