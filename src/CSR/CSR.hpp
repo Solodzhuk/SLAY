@@ -30,7 +30,11 @@ class CSR {
         double operator()(const int& i, const int& j);
 };
 
+double abs_val(const std::vector<double>& one);
+
 std::vector<double> operator+ (const std::vector<double>& one, const std::vector<double>& two);
+
+std::vector<double> operator- (const std::vector<double>& one, const std::vector<double>& two);
 
 double DOT(const std::vector<double>& one, const std::vector<double>& two);
 

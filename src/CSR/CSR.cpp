@@ -61,6 +61,14 @@ double CSR::access(const int& i, const int& j){
     return std::numeric_limits<double>::quiet_NaN();
 }
 
+double abs_val(const std::vector<double>& one){
+    double sum = 0;
+    for (auto e:one){
+        sum += e*e;
+    }
+    return sqrt(sum);
+}
+
 double CSR::operator()(const int& i, const int& j){
     for (int n = rows[i-1]; n < rows[i]; n++){
         if (cols[n] == j){
@@ -77,6 +85,14 @@ std::vector<double> operator+ (const std::vector<double>& one, const std::vector
     }
     return n; // я хз можно тут возвращать ссылку или нет так что просто скопирую не обижайтесь 我不知道
               // просто мб если вернуть n как ссылку функция подсчистит локальные переменные и будет ссылка ни на что
+}
+
+std::vector<double> operator- (const std::vector<double>& one, const std::vector<double>& two){
+    std::vector<double> n;
+    for (int i = 0; i < one.size(); i++){
+        n.push_back(one[i] - two[i]);
+    }
+    return n;
 }
 
 std::vector<double> operator* (const std::vector<double>& one, const double& two){
