@@ -40,6 +40,21 @@ TEST(CSR, testCSR){
     }
 }
 
+TEST(CSR, testCSR_2){
+    std::vector<int> i{1, 1, 3, 3};
+    std::vector<int> j{2, 4, 3, 4};
+    std::vector<double> a{8, 6, 9, 5};
+    DOK mat(i, j, a);
+    CSR mat_CSR(mat);
+    std::vector<double> val{8, 6, 9, 5};
+    for (int i = 0; i < 5; i++){
+        std::cout << mat_CSR.rows[i] << std::endl;
+    }
+    for (int c = 0; c < 3; c++){
+        ASSERT_NEAR(val[c], mat_CSR(i[c], j[c]), 1e-7);
+    }
+}
+
 TEST(CSR, testVectSum){
     std::vector<double> a{1, 2, 3.5};
     std::vector<double> b{2, 0.3, 4};

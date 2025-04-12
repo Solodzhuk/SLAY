@@ -44,8 +44,10 @@ CSR::CSR(DOK data){
         values.push_back(data.matrix[n].v);
         cols.push_back(data.matrix[n].j);
         if (cur_i != data.matrix[n].i){
+            for (int z = cur_i; z < data.matrix[n].i; z++){
+                rows.push_back(count);
+            }
             cur_i = data.matrix[n].i;
-            rows.push_back(count);
         }
         count++;
     }
