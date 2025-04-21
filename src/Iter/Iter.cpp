@@ -1,8 +1,8 @@
 #include "Iter.hpp"
 
 
-std::vector<double> simple_iter(CSR& A, std::vector<double>& b, const double& accuracy, const double& T, unsigned int iter_max){
-    std::vector<double> x(b.size(), 0.0);
+std::vector<double> simple_iter(CSR& A, std::vector<double>& b, std::vector<double>& x0, const double& accuracy, const double& T, unsigned int iter_max){
+    std::vector<double> x = x0;
     unsigned int iter = 0;
     while ((abs_val(A*x - b) > accuracy) && (iter < iter_max)){
         x = x - (A*x - b)*T;

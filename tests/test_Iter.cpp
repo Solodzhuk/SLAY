@@ -10,7 +10,8 @@ TEST(Iter, testSimple){
     DOK tmp(i, j, v);
     CSR A(tmp);
     std::vector<double> b = A*awns;
-    std::vector<double> x = simple_iter(A, b, 1e-7, 0.005, 10000);
+    std::vector<double> x0(b.size(), 0.0);
+    std::vector<double> x = simple_iter(A, b, x0, 1e-7, 0.005, 10000);
     for (int i = 0; i < 3; i++){
         ASSERT_NEAR(awns[i], x[i], 1e-7);
     }
@@ -83,4 +84,15 @@ TEST(Iter, SOR){
         ASSERT_NEAR(awns[i], x[i], 1e-7);
     }
 
+}
+
+TEST(Iter, testGet_max_lambda){
+    std::vector<int> i{1, 1, 1, 2, 2, 2, 3, 3, 3};
+    std::vector<int> j{1, 2, 3, 1, 2, 3, 1, 2, 3};
+    std::vector<double> v{3, 2, 2, 1, 3, 1, 2, 1, 3};
+    DOK tmp(i, j, v);
+    CSR A(tmp);
+    double lambda = get_max_lambda(A, 0.02, 1000);
+    double awns = 6.0;
+    ASSERT_NEAR(lambda, awns, 0.02);
 }
