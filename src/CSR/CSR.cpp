@@ -38,6 +38,7 @@ double DOK::access(const int& i, const int& j){
 }
 
 CSR::CSR(DOK data){
+    // transposed = false;
     int cur_i = 0;
     int count = 0;
     for (int n = 0; n < data.matrix.size(); n++){
@@ -63,6 +64,16 @@ double CSR::access(const int& i, const int& j){
     return std::numeric_limits<double>::quiet_NaN();
 }
 
+
+// double CSR::_access_t(const int& j, const int& i){
+//     for (int n = rows[i-1]; n < rows[i]; n++){
+//         if (cols[n] == j){
+//             return values[n];
+//         }
+//     }
+//     return 0;
+// }
+
 double abs_val(const std::vector<double>& one){
     double sum = 0;
     for (auto e:one){
@@ -78,7 +89,7 @@ double CSR::operator()(const int& i, const int& j){
         }
     }
     return 0;
-};
+}
 
 std::vector<double> operator+ (const std::vector<double>& one, const std::vector<double>& two){
     std::vector<double> n;
@@ -125,3 +136,46 @@ double DOT(const std::vector<double>& one, const std::vector<double>& two){
     }
     return n;
 }
+
+CSR::CSR(std::vector<double> values, std::vector<int> cols, std::vector<int> rows){
+    this->values = values;
+    this->cols = cols;
+    this->rows = rows;
+}
+
+CSR CSR::transpose(){
+    int colsize = *std::max_element(this->cols.begin(), this->cols.end());
+    int rowsize = this->rows.size() - 1;
+    std::vector<int> tmp = this->cols;
+    std::vector<int> new_cols;
+    int cur = 1;
+    for (int z = 0; z < this->rows.size() - 1; z++){
+        for (int v = this->rows[z]; v < this->rows[z+1]; v++){
+            new_cols.push_back(cur);
+        }
+        cur++;
+    }
+    int max_border = tmp.size() - 1;
+    std::vector<double> new_values = this->values;
+    for (int z = 0; z < tmp.size() - 1; z++){
+        for (int v = 0; v < max_border; v++){
+            if (tmp[v] > tmp[v+1]){
+                std::swap(tmp[v], tmp[v+1]);
+                std::swap(new_cols[v], new_cols[v+1]);
+                std::swap(new_values[v], new_values[v+1]);
+            }
+        }
+        max_border--;
+    }
+    cur = 0;
+    std::vector<int> new_rows;
+    new_rows.push_back(0);
+    for (int z = 1; z <= colsize; z++){
+        while (z == tmp[cur]){
+            cur++;
+        }
+        new_rows.push_back(cur);
+    }
+    CSR new_M(new_values, new_cols, new_rows);
+    return new_M;
+};

@@ -22,12 +22,16 @@ class DOK {
 
 class CSR {
     public:
+        // bool transposed; //  他们不知道我太聪明
         std::vector<double> values;
         std::vector<int> cols;
         std::vector<int> rows;
         CSR(DOK data);
+        CSR(std::vector<double> values, std::vector<int> cols, std::vector<int> rows);
         double access(const int& i, const int& j);
+        // double _access_t(const int& j, const int& i);
         double operator()(const int& i, const int& j);
+        CSR transpose();
 };
 
 double abs_val(const std::vector<double>& one);
@@ -41,3 +45,5 @@ double DOT(const std::vector<double>& one, const std::vector<double>& two);
 std::vector<double> operator* (const std::vector<double>& one, const double& two);
 
 std::vector<double> operator* (CSR& one, const std::vector<double>& two);
+
+// void sort(std::vector<int> base, )
